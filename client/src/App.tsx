@@ -1,60 +1,57 @@
-import "./App.css";
+import { useAuth } from "./services/AuthContext";
+import { Briefcase } from "lucide-react";
+import CollaboratorDashboard from "./pages/dashboard/collaborator";
+import AdminDashboard from "./pages/admin/dashboard";
+
+// Cette application web et disponible que pour les utilisateurs connectés eet qui ont un role comme admin, manager ou collaborator!
 
 function App() {
-  return (
-    <>
-      <header>
-        <h1 className="logo">JS Monorepo</h1>
-      </header>
+  const { user, loading } = useAuth();
 
-      <nav className="navbar">
-        <ul>
-          <li>
-            <a
-              href="https://github.com/WildCodeSchool/create-js-monorepo"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="30"
-                height="30"
-                viewBox="0 0 50 50"
-              >
-                <path
-                  d="M17.791,46.836C18.502,46.53,19,45.823,19,45v-5.4c0-0.197,0.016-0.402,0.041-0.61C19.027,38.994,19.014,38.997,19,39 c0,0-3,0-3.6,0c-1.5,0-2.8-0.6-3.4-1.8c-0.7-1.3-1-3.5-2.8-4.7C8.9,32.3,9.1,32,9.7,32c0.6,0.1,1.9,0.9,2.7,2c0.9,1.1,1.8,2,3.4,2 c2.487,0,3.82-0.125,4.622-0.555C21.356,34.056,22.649,33,24,33v-0.025c-5.668-0.182-9.289-2.066-10.975-4.975 c-3.665,0.042-6.856,0.405-8.677,0.707c-0.058-0.327-0.108-0.656-0.151-0.987c1.797-0.296,4.843-0.647,8.345-0.714 c-0.112-0.276-0.209-0.559-0.291-0.849c-3.511-0.178-6.541-0.039-8.187,0.097c-0.02-0.332-0.047-0.663-0.051-0.999 c1.649-0.135,4.597-0.27,8.018-0.111c-0.079-0.5-0.13-1.011-0.13-1.543c0-1.7,0.6-3.5,1.7-5c-0.5-1.7-1.2-5.3,0.2-6.6 c2.7,0,4.6,1.3,5.5,2.1C21,13.4,22.9,13,25,13s4,0.4,5.6,1.1c0.9-0.8,2.8-2.1,5.5-2.1c1.5,1.4,0.7,5,0.2,6.6c1.1,1.5,1.7,3.2,1.6,5 c0,0.484-0.045,0.951-0.11,1.409c3.499-0.172,6.527-0.034,8.204,0.102c-0.002,0.337-0.033,0.666-0.051,0.999 c-1.671-0.138-4.775-0.28-8.359-0.089c-0.089,0.336-0.197,0.663-0.325,0.98c3.546,0.046,6.665,0.389,8.548,0.689 c-0.043,0.332-0.093,0.661-0.151,0.987c-1.912-0.306-5.171-0.664-8.879-0.682C35.112,30.873,31.557,32.75,26,32.969V33 c2.6,0,5,3.9,5,6.6V45c0,0.823,0.498,1.53,1.209,1.836C41.37,43.804,48,35.164,48,25C48,12.318,37.683,2,25,2S2,12.318,2,25 C2,35.164,8.63,43.804,17.791,46.836z"
-                  fill="#eee"
-                />
-              </svg>
-              Github
-            </a>
-          </li>
-        </ul>
-      </nav>
+  if (loading) {
+    return <div className="flex items-center justify-center h-full">Chargement...</div>;
+  }
 
-      <main className="text-box">
-        <hgroup className="block-primary">
-          <h2 className="block-primary-main">JS Monorepo</h2>
-          <p className="block-primary-sub">Votre framework JavaScript</p>
-        </hgroup>
-        <p>Vous avez lu le README ?</p>
-      </main>
-
-      <footer>
-        Développé par la&nbsp;
-        <a
-          href="https://www.wildcodeschool.com/"
-          className="wcs"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Wild Code School
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto py-20">
+        <h1 className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
+          Bienvenue sur SkillSync
+        </h1>
+        <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+          La plateforme intelligente pour la gestion des compétences et des projets.
+        </p>
+        <a href="/login" className="px-8 py-4 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 hover:shadow-lg transition-all active:scale-[0.98]">
+          Commencer maintenant
         </a>
-      </footer>
-    </>
+      </div>
+    );
+  }
+
+  // Redirect or render dashboard based on role
+  if (user.role === "collaborator") {
+    return <CollaboratorDashboard />;
+  }
+
+  if (user.role === "admin") {
+    return <AdminDashboard />;
+  }
+
+
+  return (
+    // Dans une prochaine version je pourrai rajoute le dashboard manager pour géré les projets et les collaborateurs
+    <div>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2 text-gray-800 dark:text-white">Dashboard Manager</h1>
+        <p className="text-gray-600 dark:text-gray-400">Gérez vos projets et votre équipe.</p>
+      </div>
+
+      <div className="p-12 text-center bg-white dark:bg-gray-800 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+        <Briefcase size={48} className="mx-auto mb-4 text-gray-300" />
+        <h2 className="text-xl font-bold mb-2">Module Manager en cours d'extension</h2>
+        <p className="text-gray-500">Bientôt disponible : Gestion complète des projets et assignation des tâches.</p>
+      </div>
+    </div>
   );
 }
 

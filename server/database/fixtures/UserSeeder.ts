@@ -1,28 +1,55 @@
+import bcrypt from "bcryptjs";
 import AbstractSeeder from "./AbstractSeeder";
 
 class UserSeeder extends AbstractSeeder {
   constructor() {
-    // Call the constructor of the parent class (AbstractSeeder) with appropriate options
-    super({ table: "user", truncate: true });
+    super({ table: "users", truncate: true });
   }
 
-  // The run method - Populate the 'user' table with fake data
+  async run() {
+    // 1. Mandatory AI Support User
+    const hashedAiSupportPassword = await bcrypt.hash("@BloumeGenAI@!2006", 10);
+    this.insert({
+      full_name: "AI Support",
+      email: "ai-support@bloumegen.vip",
+      password_hash: hashedAiSupportPassword,
+      role: "admin",
+      refName: "user_admin_test",
+    });
 
-  run() {
-    // Generate and insert fake data into the 'user' table
-    for (let i = 0; i < 10; i += 1) {
-      // Generate fake user data
-      const fakeUser = {
-        email: this.faker.internet.email(), // Generate a fake email using faker library
-        password: this.faker.internet.password(), // Generate a fake password using faker library
-        refName: `user_${i}`, // Create a reference name for the user
-      };
+    // 2. Administrators
+    for (let i = 0; i < 2; i += 1) {
+      this.insert({
+        full_name: this.faker.person.fullName(),
+        email: this.faker.internet.email(),
+        password_hash: await bcrypt.hash("admin123", 10),
+        role: "admin",
+        refName: `admin_${i}`,
+      });
+    }
 
-      // Insert the fakeUser data into the 'user' table
-      this.insert(fakeUser); // insert into user(email, password) values (?, ?)
+    // 3. Managers
+    for (let i = 0; i < 5; i += 1) {
+      this.insert({
+        full_name: this.faker.person.fullName(),
+        email: this.faker.internet.email(),
+        password_hash: await bcrypt.hash("manager123", 10),
+        role: "manager",
+        refName: `manager_${i}`,
+      });
+    }
+
+    // 4. Collaborators
+    for (let i = 0; i < 15; i += 1) {
+      this.insert({
+        full_name: this.faker.person.fullName(),
+        email: this.faker.internet.email(),
+        password_hash: await bcrypt.hash("collab123", 10),
+        role: "collaborator",
+        refName: `collaborator_${i}`,
+      });
     }
   }
 }
 
-// Export the UserSeeder class
 export default UserSeeder;

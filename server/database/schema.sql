@@ -48,3 +48,7 @@ CREATE TABLE tasks (
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
     FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
 );
+
+
+-- Insérer un administrateur par défaut (mdp : 123456!)
+INSERT INTO users (full_name, email, password_hash, role) VALUES ('Administrateur', 'admin@exemple.com', '$2b$10$.bNetUivpEjzLilt8YAATeukRxcT3klHO6supSpG2s4Q4yiTzTKoC', 'admin');

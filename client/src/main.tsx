@@ -1,5 +1,6 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
+import "./App.css";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
 
@@ -9,20 +10,11 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 import Layout from "./components/layout/layout";
 import Login from "./pages/login";
+import { AuthProvider } from "./services/AuthContext";
 
-// Import additional components for new routes
-// Try creating these components in the "pages" folder
-
-// import About from "./pages/About";
-// import Contact from "./pages/Contact";
-
-/* ************************************************************************* */
-
-// Create router configuration with routes
-// You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
+    path: "/",
     element: <Layout />,
     children: [
       {
@@ -30,26 +22,49 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
+        path: "admin",
+        lazy: async () => ({ Component: (await import("./pages/admin/dashboard")).default }),
+      },
+
+      {
         path: "login",
         element: <Login />,
       },
+      {
+        path: "admin/users",
+        lazy: async () => ({ Component: (await import("./pages/admin/users")).default }),
+      },
+      {
+        path: "admin/skills",
+        lazy: async () => ({ Component: (await import("./pages/admin/skills")).default }),
+      },
+      {
+        path: "admin/projects",
+        lazy: async () => ({ Component: (await import("./pages/admin/projects")).default }),
+      },
+
+      {
+        path: "dashboard/collaborator",
+        lazy: async () => ({ Component: (await import("./pages/dashboard/collaborator")).default }),
+      },
+      {
+        path: "settings",
+        lazy: async () => ({ Component: (await import("./pages/settings")).default }),
+      },
     ]
   }
-  // Try adding a new route! For example, "/about" with an About component
 ]);
 
-/* ************************************************************************* */
-
-// Find the root element in the HTML document
 const rootElement = document.getElementById("root");
 if (rootElement == null) {
   throw new Error(`Your HTML Document should contain a <div id="root"></div>`);
 }
 
-// Render the app inside the root element
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );
 
