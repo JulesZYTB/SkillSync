@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../services/AuthContext";
 import { LayoutDashboard, Users, BookOpen, LogOut, Settings, Briefcase } from "lucide-react";
 
@@ -65,7 +65,7 @@ export default function Header() {
                     </div>
 
                     <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <button onClick={handleLogout} className="flex items-center w-full gap-3 p-2 text-red-600 rounded text-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+                        <button type="button" onClick={handleLogout} className="flex items-center w-full gap-3 p-2 text-red-600 rounded text-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
                             <LogOut size={18} />
                             <span>Déconnexion</span>
                         </button>

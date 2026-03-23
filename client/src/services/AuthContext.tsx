@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { User } from "../types";
+import { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
+import type { User } from "../types";
 import { api } from "../services/api";
 
 type AuthContextType = {

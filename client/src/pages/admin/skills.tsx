@@ -57,7 +57,7 @@ export default function AdminSkills() {
               <Book size={14} className="text-gray-400" />
               <span className="text-sm text-gray-700 dark:text-gray-300">{skill.label}</span>
             </div>
-            <button 
+            <button type="button"
               onClick={() => handleDelete(skill.id)}
               className="text-red-500 opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 dark:hover:bg-red-900/10 rounded"
             >

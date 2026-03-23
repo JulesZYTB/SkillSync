@@ -85,7 +85,7 @@ export default function AdminUsers() {
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Utilisateurs</h1>
-        <button 
+        <button type="button"
           onClick={() => handleOpenModal()}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700"
         >
@@ -116,8 +116,8 @@ export default function AdminUsers() {
                     </span>
                   </td>
                   <td className="p-4 text-right space-x-2">
-                    <button onClick={() => handleOpenModal(user)} className="text-blue-600 hover:underline">Modifier</button>
-                    <button onClick={() => handleDelete(user.id)} className="text-red-600 hover:underline">Supprimer</button>
+                    <button type="button" onClick={() => handleOpenModal(user)} className="text-blue-600 hover:underline">Modifier</button>
+                    <button type="button" onClick={() => handleDelete(user.id)} className="text-red-600 hover:underline">Supprimer</button>
                   </td>
                 </tr>
               ))}
@@ -133,7 +133,7 @@ export default function AdminUsers() {
               <h2 className="font-bold text-gray-900 dark:text-white">
                 {editingUser ? "Modifier" : "Nouvel utilisateur"}
               </h2>
-              <button onClick={handleCloseModal} className="text-gray-500 hover:text-gray-700"><X size={20} /></button>
+              <button type="button" onClick={handleCloseModal} className="text-gray-500 hover:text-gray-700"><X size={20} /></button>
             </div>
             
             <form onSubmit={handleSubmit} className="p-4 space-y-4">

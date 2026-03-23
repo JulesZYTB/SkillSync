@@ -111,7 +111,7 @@ export default function ProjectTasks() {
           <h1 className="text-2xl font-bold">Projets & Missions</h1>
           <p className="text-gray-500 text-sm">Gérez les projets et assignez des missions.</p>
         </div>
-        <button
+        <button type="button"
           onClick={() => setProjectModalOpen(true)}
           className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded text-sm font-medium hover:bg-indigo-700"
         >
@@ -138,13 +138,13 @@ export default function ProjectTasks() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button
+                <button type="button"
                   onClick={() => handleDeleteProject(project.id)}
                   className="text-red-600 hover:underline text-xs"
                 >
                   Supprimer
                 </button>
-                <button
+                <button type="button"
                   onClick={() => {
                     setTaskForm({ ...taskForm, project_id: project.id });
                     setTaskModalOpen(true);
@@ -168,7 +168,7 @@ export default function ProjectTasks() {
           <div className="bg-white dark:bg-gray-800 rounded shadow-lg w-full max-w-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="p-4 bg-indigo-600 text-white flex justify-between items-center">
               <h2 className="font-bold">Nouveau Projet</h2>
-              <button onClick={() => setProjectModalOpen(false)}><X size={20} /></button>
+              <button type="button" onClick={() => setProjectModalOpen(false)}><X size={20} /></button>
             </div>
             <form onSubmit={handleCreateProject} className="p-4 space-y-4">
               <div className="space-y-1">
@@ -206,7 +206,7 @@ export default function ProjectTasks() {
           <div className="bg-white dark:bg-gray-800 rounded shadow-lg w-full max-w-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="p-4 bg-blue-600 text-white flex justify-between items-center">
               <h2 className="font-bold">Nouvelle Tâche</h2>
-              <button onClick={() => setTaskModalOpen(false)}><X size={20} /></button>
+              <button type="button" onClick={() => setTaskModalOpen(false)}><X size={20} /></button>
             </div>
             <form onSubmit={handleCreateTask} className="p-4 space-y-4">
               <div className="space-y-1">
@@ -299,7 +299,7 @@ function ProjectTasksList({ projectId, users, onDeleteTask }: { projectId: numbe
                 <span className="text-[10px] text-gray-500">{assignee?.full_name || "Non assigné"}</span>
               </div>
             </div>
-            <button
+            <button type="button"
               onClick={() => onDeleteTask(task.id)}
               className="text-red-500 opacity-0 group-hover:opacity-100 p-1 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
             >
