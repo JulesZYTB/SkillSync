@@ -1,6 +1,6 @@
-CREATE DATABASE skillsync_db;
+/* CREATE DATABASE skillsync_db;
 USE skillsync_db;
-
+ */
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,

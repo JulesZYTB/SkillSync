@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
-import { UserPayload } from "../types/auth";
+import type { UserPayload } from "../types/auth";
 
 const verifyToken: RequestHandler = (req, res, next) => {
   const token = req.cookies?.auth_token;
