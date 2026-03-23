@@ -26,7 +26,7 @@ import userActions from "./modules/user/userActions";
 import { isAdmin } from "./middlewares/authMiddleware";
 
 router.get("/users", verifyToken, isAdmin, userActions.browse);
-router.get("/stats", verifyToken, isAdmin, userActions.getStats);
+router.get("/stats", verifyToken, isManager||isAdmin, userActions.getStats);
 router.get("/users/:id", verifyToken, isAdmin, userActions.read);
 
 router.post("/users", verifyToken, isAdmin, userActions.add);

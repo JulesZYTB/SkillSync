@@ -33,13 +33,14 @@ function App() {
     return <CollaboratorDashboard />;
   }
 
-  if (user.role === "admin") {
+  if (user.role === "admin" || user.role === "manager") {
     return <AdminDashboard />;
   }
 
 
   return (
     // Dans une prochaine version je pourrai rajoute le dashboard manager pour géré les projets et les collaborateurs
+    // Version tempo avec le dashboard admin ! 
     <div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2 text-gray-800 dark:text-white">Dashboard Manager</h1>

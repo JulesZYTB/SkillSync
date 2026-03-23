@@ -17,12 +17,14 @@ import {
   Cell,
   Legend
 } from "recharts";
+import { useAuth } from "../../services/AuthContext";
 
 const COLORS = ["#3b82f6", "#6366f1", "#8b5cf6", "#ec4899", "#f43f5e"];
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth<any>();
 
   useEffect(() => {
     api.users.getStats()
@@ -59,41 +61,45 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Utilisateurs" value={totalUsers} label="Total" />
+        {user.role === "admin" && (
+          <StatCard title="Utilisateurs" value={totalUsers} label="Total" /> 
+        )}
         <StatCard title="Projets" value={stats.projects.find((p: any) => p.status === 'active')?.count || 0} label="Actifs" />
         <StatCard title="Compétences" value={stats.skills} label="Catalogue" />
         <StatCard title="Tâches" value={stats.tasks.find((t: any) => t.status === 'done')?.count || 0} label="Terminées" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white dark:bg-gray-800 p-4 rounded border border-gray-200 dark:border-gray-700">
-          <h2 className="text-sm font-bold flex items-center gap-2 mb-4">
-            <Users size={16} className="text-blue-600" />
-            Répartition des Rôles
-          </h2>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={userDistribution}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
-                  {userDistribution.map((_: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+        {user.role === "admin" && (
+          <div className="bg-white dark:bg-gray-800 p-4 rounded border border-gray-200 dark:border-gray-700">
+            <h2 className="text-sm font-bold flex items-center gap-2 mb-4">
+              <Users size={16} className="text-blue-600" />
+              Répartition des Rôles
+            </h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={userDistribution}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={2}
+                    dataKey="value"
+                  >
+                    {userDistribution.map((_: any, index: number) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-        </div>
-
+        )}
+        
         <div className="bg-white dark:bg-gray-800 p-4 rounded border border-gray-200 dark:border-gray-700">
           <h2 className="text-sm font-bold flex items-center gap-2 mb-4">
             <BarChart3 size={16} className="text-indigo-600" />
