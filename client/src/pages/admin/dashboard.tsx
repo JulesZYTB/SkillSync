@@ -24,7 +24,8 @@ const COLORS = ["#3b82f6", "#6366f1", "#8b5cf6", "#ec4899", "#f43f5e"];
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth<any>();
+  const { user } = useAuth();
+  if (!user) return null;
 
   useEffect(() => {
     api.users.getStats()

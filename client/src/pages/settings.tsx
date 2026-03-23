@@ -25,13 +25,13 @@ export default function Settings() {
           <div className="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-2xl">
             <span>Mode Sombre (Soon...)</span>
             <div className="w-12 h-6 bg-blue-600 rounded-full flex items-center px-1">
-              <div className="w-4 h-4 bg-white rounded-full ml-auto"></div>
+              <div className="w-4 h-4 bg-white rounded-full ml-auto">*</div>
             </div>
           </div>
           <div className="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-2xl">
             <span>Notifications Email (Soon...)</span>
             <div className="w-12 h-6 bg-gray-300 rounded-full flex items-center px-1">
-              <div className="w-4 h-4 bg-white rounded-full"></div>
+              <div className="w-4 h-4 bg-white rounded-full">*</div>
             </div>
           </div>
         </div>

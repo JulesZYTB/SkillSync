@@ -15,7 +15,7 @@ function App() {
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto py-20">
-        <h1 className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
+        <h1 className="text-5xl font-extrabold mb-6 bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
           Bienvenue sur SkillSync
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
