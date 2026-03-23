@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
 import taskRepository from "./taskRepository";
-import { UserPayload } from "../../types/auth";
+import type { UserPayload } from "../../types/auth";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {

@@ -77,6 +77,7 @@ export const api = {
     destroy: (id: number) => api.fetch(`/projects/${id}`, { 
       method: "DELETE" 
     }),
+    mine: () => api.fetch("/me/projects"),
   },
 
 

@@ -16,7 +16,8 @@ export default function Header() {
                 <aside className="w-56 p-4 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col justify-between">
                     <div>
                         <div className="mb-8 pl-2">
-                            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">SkillSync</h2>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">SkillSync</h2> 
+                            <p className="text-sm text-gray-600 dark:text-gray-400"> - {user.role}</p>
                         </div>
 
                         <nav className="space-y-1">
@@ -40,6 +41,18 @@ export default function Header() {
                                     <NavLink to="/admin/skills" className={({ isActive }) => `flex items-center gap-3 p-2 rounded text-sm transition-colors ${isActive ? "bg-blue-600 text-white font-bold" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"}`}>
                                         <BookOpen size={18} />
                                         <span>Catalogue</span>
+                                    </NavLink>
+                                </>
+                            )}
+                            {(user.role === "collaborator") && (
+                                <>
+                                    <NavLink to="/dashboard/projects" className={({ isActive }) => `flex items-center gap-3 p-2 rounded text-sm transition-colors ${isActive ? "bg-blue-600 text-white font-bold" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"}`}>
+                                        <Briefcase size={18} />
+                                        <span>Projets</span>
+                                    </NavLink>
+                                    <NavLink to="/dashboard/projects" className={({ isActive }) => `flex items-center gap-3 p-2 rounded text-sm transition-colors ${isActive ? "bg-blue-600 text-white font-bold" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"}`}>
+                                        <BookOpen size={18} />
+                                        <span>Vos tâches</span>
                                     </NavLink>
                                 </>
                             )}

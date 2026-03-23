@@ -42,10 +42,13 @@ const router = createBrowserRouter([
         path: "admin/projects",
         lazy: async () => ({ Component: (await import("./pages/admin/projects")).default }),
       },
-
       {
         path: "dashboard/collaborator",
         lazy: async () => ({ Component: (await import("./pages/dashboard/collaborator")).default }),
+      },
+      {
+        path: "dashboard/projects",
+        lazy: async () => ({ Component: (await import("./pages/dashboard/projects")).default }),
       },
       {
         path: "settings",

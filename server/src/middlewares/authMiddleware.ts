@@ -35,4 +35,12 @@ const isManager: RequestHandler = (req, res, next) => {
   next();
 };
 
-export { verifyToken, isAdmin, isManager };
+const isCollaborator: RequestHandler = (req, res, next) => {
+  if (req.user?.role !== "collaborator") {
+    res.status(403).json({ message: "Accès refusé" }); // : Collaborator requis
+    return;
+  }
+  next();
+};
+
+export { verifyToken, isAdmin, isManager, isCollaborator };

@@ -51,6 +51,7 @@ router.get("/projects/:id", verifyToken, projectActions.read);
 router.post("/projects", verifyToken, isManager, projectActions.add);
 router.put("/projects/:id", verifyToken, isManager, projectActions.edit);
 router.delete("/projects/:id", verifyToken, isManager, projectActions.destroy);
+router.get("/me/projects", verifyToken, projectActions.readMyProjects);
 
 // Define task-related routes
 import taskActions from "./modules/task/taskActions";

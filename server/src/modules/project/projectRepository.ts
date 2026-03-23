@@ -1,7 +1,7 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
-import { Project } from "../../types/project";
+import type { Project } from "../../types/project";
 
 class ProjectRepository {
   async create(project: Omit<Project, "id">) {
@@ -53,6 +53,14 @@ class ProjectRepository {
 
   async delete(id: number) {
     await databaseClient.query<Result>("delete from projects where id = ?", [id]);
+  }
+
+  async readByUserId(userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "select distinct p.* from projects p inner join tasks t on p.id = t.project_id where t.assigned_to = ?",
+      [userId]
+    );
+    return rows;
   }
 }
 

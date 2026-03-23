@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import projectRepository from "./projectRepository";
+import type { UserPayload } from "../../types/auth";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
@@ -27,7 +28,7 @@ const read: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     const { title, description } = req.body;
-    const owner_id = (req.user as any).id;
+    const owner_id = (req.user as UserPayload).id;
     const insertId = await projectRepository.create({ title, description, owner_id, status: "planned" });
     res.status(201).json({ insertId });
   } catch (err) {
@@ -56,4 +57,14 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add, edit, destroy };
+const readMyProjects: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = (req.user as UserPayload).id;
+    const projects = await projectRepository.readByUserId(userId);
+    res.json(projects);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, read, add, edit, destroy, readMyProjects };
