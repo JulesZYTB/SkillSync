@@ -2,6 +2,8 @@ import type { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import authRepository from "./authRepository";
+import userRepository from "../user/userRepository";
+import type { UserPayload } from "../../types/auth";
 
 const login: RequestHandler = async (req, res, next) => {
   try {
@@ -51,8 +53,17 @@ const logout: RequestHandler = (req, res) => {
   res.sendStatus(204);
 };
 
-const me: RequestHandler = (req, res) => {
-  res.json(req.user);
+const me: RequestHandler = async (req, res, next) => {
+  try {
+    const user = await userRepository.read((req.user as UserPayload).id);
+    if (!user) {
+      res.status(401).json({ message: "Utilisateur non trouvé" });
+      return;
+    }
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
 };
 
 export default { login, logout, me };
