@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../services/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogIn } from "lucide-react";
 
 export default function Login() {
@@ -63,6 +63,13 @@ export default function Login() {
             Se connecter
           </button>
         </form>
+        
+          <Link
+            to="/"
+            className="w-full py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all"
+          >
+            Retour
+          </Link>
       </div>
     </div>
   );

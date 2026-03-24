@@ -18,6 +18,9 @@ export const api = {
     
     const data = await res.json();
     
+    if (res.status === 401) {
+      throw new Error("Non autorisée")
+    }
     if (!res.ok) {
       throw new Error(data.message || "Une erreur ses produite ! ");
     }
