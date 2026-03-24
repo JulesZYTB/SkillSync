@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../services/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { LogIn } from "lucide-react";
+import { ArrowLeft, LogIn } from "lucide-react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -62,14 +62,15 @@ export default function Login() {
           >
             Se connecter
           </button>
-        </form>
-        
+          <div className="flex">
           <Link
             to="/"
-            className="w-full py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all"
+            className="flex items-center justify-center w-full py-3 font-semibold text-white bg-purple-600 rounded-lg hover:bg-purple-700 active:scale-[0.98] transition-all"
           >
-            Retour
+            <ArrowLeft /> Retour
           </Link>
+          </div>
+        </form>
       </div>
     </div>
   );
