@@ -1,0 +1,36 @@
+<mxfile host="65bd71144e">
+    <diagram id="8_n2kLNnuT7BnShvOVsv" name="Page-1">
+        <mxGraphModel dx="765" dy="518" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="user" value="User&#10;--&#10;- id : int&#10;- full_name : string&#10;- email : string&#10;- password_hash : string&#10;- role : userRole&#10;- created_at : timestamp&#10;--&#10;+ register() : bool&#10;+ login() : bool" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=1;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="40" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="enumRole" value="«enumeration»&#10;userRole&#10;--&#10;+ admin&#10;+ manager&#10;+ collaborator" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=1;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="1" vertex="1">
+                    <mxGeometry x="630" y="80" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="project" value="Project&#10;--&#10;- id : int&#10;- title : string&#10;- description : text&#10;- owner_id : int&#10;- status : projStatus&#10;--&#10;+ createProject()&#10;+ assignTask()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=1;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="320" width="200" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="enumProjStat" value="«enumeration»&#10;projStatus&#10;--&#10;+ planned&#10;+ active&#10;+ completed&#10;+ on_hold" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=1;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="320" width="140" height="110" as="geometry">
+                        <mxRectangle x="540" y="320" width="130" height="110" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="task" value="Task&#10;--&#10;- id : int&#10;- title : string&#10;- priority : taskPriority&#10;- status : taskStatus&#10;--&#10;+ updateStatus()&#10;+ setPriority()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=1;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="325" width="180" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel1" value="is owner of&#10;1         0..*" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="user" target="project" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel2" value="contains&#10;1        1..*" style="endArrow=diamond;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;endFill=1;" parent="1" source="project" target="task" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel3" value="" style="endArrow=none;html=1;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="user" target="enumRole" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
