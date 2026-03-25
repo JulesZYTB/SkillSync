@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../src/app";
 import databaseClient from "../../database/client";
-import type { Rows, Result } from "../../database/client";
+import type { Rows, Result, Fields } from "../../database/client";
 import jwt from "jsonwebtoken";
 
 process.env.APP_SECRET = "test_secret";
@@ -11,7 +11,7 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-const generateToken = (role: string = "admin") => {
+const generateToken = (role: "collaborator" | "manager" | "admin" = "admin") => {
   return jwt.sign({ id: 1, role }, process.env.APP_SECRET || "default_secret");
 };
 
@@ -19,7 +19,7 @@ describe("User Routes", () => {
   describe("GET /api/users", () => {
     it("should fetch users successfully for admin", async () => {
       const rows = [{ id: 1, full_name: "Admin User", email: "admin@test.com", role: "admin" }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/users")
@@ -40,13 +40,13 @@ describe("User Routes", () => {
 
   describe("GET /api/stats", () => {
     it("should fetch stats successfully for manager", async () => {
-      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: any) => {
+      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: unknown) => {
         const query = typeof sql === "string" ? sql.toLowerCase() : "";
-        if (query.includes("count(*)") && query.includes("from users")) return [[{ role: "admin", count: 1 }], []] as [Rows, any];
-        if (query.includes("count(*)") && query.includes("from projects")) return [[{ status: "active", count: 1 }], []] as [Rows, any];
-        if (query.includes("count(*)") && query.includes("from skills")) return [[{ count: 5 }], []] as [Rows, any];
-        if (query.includes("count(*)") && query.includes("from tasks")) return [[{ status: "todo", count: 1 }], []] as [Rows, any];
-        return [[], []] as [Rows, any];
+        if (query.includes("count(*)") && query.includes("from users")) return [[{ role: "admin", count: 1 }], []] as unknown as [Rows, Fields];
+        if (query.includes("count(*)") && query.includes("from projects")) return [[{ status: "active", count: 1 }], []] as unknown as [Rows, Fields];
+        if (query.includes("count(*)") && query.includes("from skills")) return [[{ count: 5 }], []] as unknown as [Rows, Fields];
+        if (query.includes("count(*)") && query.includes("from tasks")) return [[{ status: "todo", count: 1 }], []] as unknown as [Rows, Fields];
+        return [[], []] as unknown as [Rows, Fields];
       });
 
       const response = await supertest(app)
@@ -64,7 +64,7 @@ describe("User Routes", () => {
   describe("GET /api/users/:id", () => {
     it("should fetch a single user successfully for admin", async () => {
       const rows = [{ id: 1, full_name: "Test User", email: "test@test.com", role: "collaborator" }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/users/1")
@@ -75,7 +75,7 @@ describe("User Routes", () => {
     });
 
     it("should return 404 if user not found", async () => {
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [[], []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [[], []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/users/999")
@@ -88,7 +88,7 @@ describe("User Routes", () => {
   describe("POST /api/users", () => {
     it("should add a new user successfully for admin", async () => {
       const result = { insertId: 2 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const newUser = {
         full_name: "New User",
@@ -110,7 +110,7 @@ describe("User Routes", () => {
   describe("PUT /api/users/:id", () => {
     it("should update user successfully for admin", async () => {
       const result = { affectedRows: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const updatedUser = {
         full_name: "Updated Name",
@@ -130,7 +130,7 @@ describe("User Routes", () => {
   describe("DELETE /api/users/:id", () => {
     it("should delete user successfully for admin", async () => {
       const result = { affectedRows: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .delete("/api/users/1")

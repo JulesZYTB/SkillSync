@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../src/app";
 import databaseClient from "../../database/client";
-import type { Rows, Result } from "../../database/client";
+import type { Rows, Result, Fields } from "../../database/client";
 import jwt from "jsonwebtoken";
 
 process.env.APP_SECRET = "test_secret";
@@ -19,7 +19,7 @@ describe("Skill Routes", () => {
   describe("GET /api/skills", () => {
     it("should fetch skills successfully for authenticated user", async () => {
       const rows = [{ id: 1, label: "Javascript" }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/skills")
@@ -33,7 +33,7 @@ describe("Skill Routes", () => {
   describe("POST /api/skills", () => {
     it("should add a new skill successfully for admin", async () => {
       const result = { insertId: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .post("/api/skills")
@@ -57,7 +57,7 @@ describe("Skill Routes", () => {
   describe("DELETE /api/skills/:id", () => {
     it("should delete skill successfully for admin", async () => {
       const result = { affectedRows: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .delete("/api/skills/1")
@@ -70,7 +70,7 @@ describe("Skill Routes", () => {
   describe("GET /api/me/skills", () => {
     it("should return user skills", async () => {
       const rows = [{ label: "Javascript", level: 5 }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/me/skills")
@@ -84,7 +84,7 @@ describe("Skill Routes", () => {
   describe("POST /api/me/skills", () => {
     it("should update user skill level", async () => {
       const result = { affectedRows: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .post("/api/me/skills")

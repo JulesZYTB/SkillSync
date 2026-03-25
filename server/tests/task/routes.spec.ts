@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../src/app";
 import databaseClient from "../../database/client";
-import type { Rows, Result } from "../../database/client";
+import type { Rows, Result, Fields } from "../../database/client";
 import jwt from "jsonwebtoken";
 
 process.env.APP_SECRET = "test_secret";
@@ -19,7 +19,7 @@ describe("Task Routes", () => {
   describe("GET /api/tasks", () => {
     it("should fetch tasks successfully for authenticated user", async () => {
       const rows = [{ id: 1, title: "Task 1", project_id: 1 }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/tasks")
@@ -33,7 +33,7 @@ describe("Task Routes", () => {
   describe("GET /api/tasks/:id", () => {
     it("should fetch a single task", async () => {
       const rows = [{ id: 1, title: "Task 1", project_id: 1 }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/tasks/1")
@@ -47,7 +47,7 @@ describe("Task Routes", () => {
   describe("POST /api/tasks", () => {
     it("should add a new task successfully for manager", async () => {
       const result = { insertId: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .post("/api/tasks")
@@ -62,7 +62,7 @@ describe("Task Routes", () => {
   describe("PUT /api/tasks/:id", () => {
     it("should update task successfully for authenticated user", async () => {
       const result = { affectedRows: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .put("/api/tasks/1")
@@ -76,7 +76,7 @@ describe("Task Routes", () => {
   describe("DELETE /api/tasks/:id", () => {
     it("should delete task successfully for manager", async () => {
       const result = { affectedRows: 1 } as Result;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
       const response = await supertest(app)
         .delete("/api/tasks/1")
@@ -89,7 +89,7 @@ describe("Task Routes", () => {
   describe("GET /api/me/tasks", () => {
     it("should return user tasks", async () => {
       const rows = [{ id: 1, title: "My Task" }] as Rows;
-      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []]);
+      jest.spyOn(databaseClient, "query").mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
       const response = await supertest(app)
         .get("/api/me/tasks")

@@ -7,7 +7,7 @@ import app from "../../src/app";
 // Import databaseClient
 import databaseClient from "../../database/client";
 
-import type { Result, Rows } from "../../database/client";
+import type { Result, Rows, Fields } from "../../database/client";
 
 // Restore all mocked functions after each test
 afterEach(() => {
@@ -23,7 +23,7 @@ describe("GET /api/items", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [rows, []]);
+      .mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
     // Send a GET request to the /api/items endpoint
     const response = await supertest(app).get("/api/items");
@@ -43,7 +43,7 @@ describe("GET /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [rows, []]);
+      .mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
     // Send a GET request to the /api/items/:id endpoint
     const response = await supertest(app).get("/api/items/1");
@@ -60,7 +60,7 @@ describe("GET /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [rows, []]);
+      .mockImplementation(async () => [rows, []] as unknown as [Rows, Fields]);
 
     // Send a GET request to the /api/items/:id endpoint with an invalid ID
     const response = await supertest(app).get("/api/items/0");
@@ -81,7 +81,7 @@ describe("POST /api/items", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Fake item data
     const fakeItem = { title: "foo", user_id: 0 };
@@ -102,7 +102,7 @@ describe("POST /api/items", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Fake item data with missing user_id
     const fakeItem = { title: "foo" };
@@ -126,7 +126,7 @@ describe("PUT /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Fake item data
     const fakeItem = { title: "foo", user_id: 0 };
@@ -146,7 +146,7 @@ describe("PUT /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Fake item data with missing user_id
     const fakeItem = { title: "foo" };
@@ -166,7 +166,7 @@ describe("PUT /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Fake item data with missing user_id
     const fakeItem = { title: "foo", user_id: 0 };
@@ -190,7 +190,7 @@ describe("DELETE /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Send a DELETE request to the /api/items/:id endpoint
     const response = await supertest(app).delete("/api/items/42");
@@ -207,7 +207,7 @@ describe("DELETE /api/items/:id", () => {
     // Mock the implementation of the database query method
     jest
       .spyOn(databaseClient, "query")
-      .mockImplementation(async () => [result, []]);
+      .mockImplementation(async () => [result, []] as unknown as [Result, Fields]);
 
     // Send a DELETE request to the /api/items/:id endpoint
     const response = await supertest(app).delete("/api/items/43");

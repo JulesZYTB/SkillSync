@@ -16,10 +16,11 @@ const client = mysql.createPool({
 export default client;
 
 // Types export
-import type { Pool, ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import type { Pool, ResultSetHeader, RowDataPacket, FieldPacket } from "mysql2/promise";
 
 type DatabaseClient = Pool;
 type Result = ResultSetHeader;
 type Rows = RowDataPacket[];
+type Fields = FieldPacket[];
 
-export type { DatabaseClient, Result, Rows };
+export type { DatabaseClient, Result, Rows, Fields };

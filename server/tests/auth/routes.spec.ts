@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../src/app";
 import databaseClient from "../../database/client";
-import type { Rows } from "../../database/client";
+import type { Rows, Fields } from "../../database/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -23,12 +23,12 @@ describe("Auth Routes", () => {
         role: "admin",
       };
 
-      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: any) => {
+      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: unknown) => {
         const query = typeof sql === "string" ? sql.toLowerCase() : "";
         if (query.includes("from users where email = ?")) {
-          return [[user], []] as [Rows, any];
+          return [[user], []] as unknown as [Rows, Fields];
         }
-        return [[], []] as [Rows, any];
+        return [[], []] as unknown as [Rows, Fields];
       });
 
       jest.spyOn(bcrypt, "compare").mockImplementation(async () => true);
@@ -56,12 +56,12 @@ describe("Auth Routes", () => {
         role: "admin",
       };
 
-      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: any) => {
+      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: unknown) => {
         const query = typeof sql === "string" ? sql.toLowerCase() : "";
         if (query.includes("from users where email = ?")) {
-          return [[user], []] as [Rows, any];
+          return [[user], []] as unknown as [Rows, Fields];
         }
-        return [[], []] as [Rows, any];
+        return [[], []] as unknown as [Rows, Fields];
       });
 
       jest.spyOn(bcrypt, "compare").mockImplementation(async () => false);
@@ -96,12 +96,12 @@ describe("Auth Routes", () => {
       // Mock verifyToken by providing a valid cookie and secret
       const token = jwt.sign({ id: user.id, role: user.role }, process.env.APP_SECRET || "default_secret");
 
-      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: any) => {
+      jest.spyOn(databaseClient, "query").mockImplementation(async (sql: unknown) => {
         const query = typeof sql === "string" ? sql.toLowerCase() : "";
         if (query.includes("from users where id = ?")) {
-          return [[user], []] as [Rows, any];
+          return [[user], []] as unknown as [Rows, Fields];
         }
-        return [[], []] as [Rows, any];
+        return [[], []] as unknown as [Rows, Fields];
       });
 
       const response = await supertest(app)
