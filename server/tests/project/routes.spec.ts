@@ -11,7 +11,7 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-const generateToken = (role: string = "collaborator") => {
+const generateToken = (role: "collaborator" | "manager" | "admin" = "collaborator") => {
   return jwt.sign({ id: 1, role }, process.env.APP_SECRET || "default_secret");
 };
 
