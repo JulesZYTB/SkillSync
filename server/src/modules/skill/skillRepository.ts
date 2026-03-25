@@ -1,7 +1,7 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
-import { Skill, UserSkill } from "../../types/skill";
+import type { Skill, UserSkill } from "../../types/skill";
 
 class SkillRepository {
   // Catalogue des compétences (Admin)

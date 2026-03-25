@@ -1,7 +1,7 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
-import { Task } from "../../types/task";
+import type { Task } from "../../types/task";
 
 class TaskRepository {
   async create(task: Omit<Task, "id">) {
