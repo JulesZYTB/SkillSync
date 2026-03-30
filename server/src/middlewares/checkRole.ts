@@ -2,24 +2,7 @@ import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import type { UserPayload } from "../types/auth";
 
-const verifyToken: RequestHandler = (req, res, next) => {
-  const token = req.cookies?.auth_token;
-
-  if (!token) {
-    res.status(401).json({ message: "Non autorisé" }); // : Token manquant
-    return;
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.APP_SECRET as string) as UserPayload;
-    req.user = decoded;
-    next();
-  } catch (err) {
-    res.status(401).json({ message: "Non autorisé" }); // : Token invalide
-  }
-};
-
-const isAdmin: RequestHandler = (req, res, next) => {
+/* const isAdmin: RequestHandler = (req, res, next) => {
   if (req.user?.role !== "admin") {
     res.status(403).json({ message: "Accès refusé" }); // : Administrateur requis
     return;
@@ -42,5 +25,18 @@ const isCollaborator: RequestHandler = (req, res, next) => {
   }
   next();
 };
-
-export { verifyToken, isAdmin, isManager, isCollaborator };
+ */
+const checkRole = (role: string, role2?: string): RequestHandler => {
+  return (req, res, next) => {
+    if (req.user?.role !== role) {
+      if (role2 && req.user?.role === role2) {
+        next();
+        return;
+      }
+      res.status(403).json({ message: "Accès refusé" }); // : Role requis
+      return;
+    }
+    next();
+  };
+};
+export { checkRole };
