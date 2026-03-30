@@ -1,6 +1,4 @@
 import type { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
-import type { UserPayload } from "../types/auth";
 
 /* const isAdmin: RequestHandler = (req, res, next) => {
   if (req.user?.role !== "admin") {
