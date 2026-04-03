@@ -76,6 +76,18 @@ L'Admin doit pouvoir gérer les comptes pour que l'équipe reste à jour.
 
 ---
 
+## 🧪 7. Tests Unitaires (`tests/unit/`)
+
+### Pourquoi ?
+Contrairement aux tests d'intégration qui testent tout le système (avec la base de données), les tests unitaires isolent une petite partie du code (une fonction, un middleware) pour vérifier sa logique pure. Ils sont très rapides et aident à trouver des bugs précis.
+
+### Comment ?
+- **Mocks** : On utilise des "doublures" (mocks) pour remplacer les dépendances complexes comme la base de données ou les services externes.
+- **Middlewares (`middlewares/`)** : On teste que `verifyToken` et `checkRole` bloquent bien les accès non autorisés en simulant différents scénarios de jetons et de rôles.
+- **Repositories (`repositories/`)** : On teste `userRepository` en simulant les réponses de la base de données pour vérifier que les requêtes SQL sont bien construites.
+
+---
+
 ## 🚀 Comment lancer les tests ?
 
 Pour lancer tous ces tests d'un coup, utilise cette commande dans ton terminal (dans le dossier `server`) :
