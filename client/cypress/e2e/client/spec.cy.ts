@@ -1,4 +1,4 @@
-describe('Testing login and create user', () => {
+describe('Testing login and create user ADMIN', () => {
   const emailAdmin = "admin@exemple.com";
 
   const passwordAdmin = '123456!';
