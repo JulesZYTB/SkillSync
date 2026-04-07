@@ -99,5 +99,26 @@ describe('Testing login and create user', () => {
     cy.get('#root button.text-white span').click();
 
   });
+
+  it('Check Settings interface', function() {
+    cy.visit('http://localhost:3000/')
+    
+    cy.get('#root a.font-bold').click();
+    
+    cy.get('#email').type(emailAdmin);
+    cy.get('#password').type(passwordAdmin);
+    
+    cy.get('button[type="submit"], #root button.w-full').first().click();
+    
+    cy.get('#root button.flex span').should('contain.text', 'Déconnexion');
+    
+    
+    
+    cy.get('#root a[href="/settings"] span').click();
+    cy.get('#root div:nth-child(2) > p.font-medium').click();
+    cy.get('#root div:nth-child(2) > p.font-medium').click();
+    cy.get('#root div:nth-child(2) > p.font-medium').click();
+    cy.get('#root div:nth-child(2) > p.font-medium').should('have.text', emailAdmin);
+  });
 });
 
