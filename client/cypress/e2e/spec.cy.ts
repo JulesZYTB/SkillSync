@@ -135,7 +135,7 @@ describe('Global Application Tests', () => {
       
       cy.get('#root button.flex span').should('contain.text', 'Déconnexion');
       
-      cy.get('#root div.mb-8').should('have.text', '- manager');
+      cy.get('#root p.dark\\:text-gray-400').should('have.text', ' - manager');
     });
 
     it('Check feature project and assigne task and delete random', () => {
