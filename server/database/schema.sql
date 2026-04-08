@@ -52,3 +52,5 @@ CREATE TABLE tasks (
 
 -- Insérer un administrateur par défaut (mdp : 123456!)
 INSERT INTO users (full_name, email, password_hash, role) VALUES ('Administrateur', 'admin@exemple.com', '$2b$10$.bNetUivpEjzLilt8YAATeukRxcT3klHO6supSpG2s4Q4yiTzTKoC', 'admin');
+INSERT INTO users (full_name, email, password_hash, role) VALUES ('Collaborateur', 'collaborateur@exemple.com', '$2b$10$.bNetUivpEjzLilt8YAATeukRxcT3klHO6supSpG2s4Q4yiTzTKoC', 'collaborator');
+INSERT INTO users (full_name, email, password_hash, role) VALUES ('Manager', 'manager@exemple.com', '$2b$10$.bNetUivpEjzLilt8YAATeukRxcT3klHO6supSpG2s4Q4yiTzTKoC', 'manager');
