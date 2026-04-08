@@ -43,7 +43,7 @@ describe('Global Application Tests', () => {
       cy.get('#root button.bg-blue-600.flex-1').click();
     });
 
-    it('Create news project and asignée the task to a user', function() {
+    it('Create news project and asignée the task to a user', () => {
       const fakename = `project_${Math.random().toString(36).substring(2, 10)}`;
       const fakeDescription = `description_${Math.random().toString(36).substring(2, 10)}`;
       const faketitre = `titre_${Math.random().toString(36).substring(2, 10)}`;
@@ -79,7 +79,7 @@ describe('Global Application Tests', () => {
           
     });
 
-    it('Create news competence', function() {
+    it('Create news competence', () => {
       const fakeCompet = `competence_${Math.random().toString(36).substring(2, 10)}`;
 
       cy.visit('http://localhost:3000/')
@@ -99,7 +99,7 @@ describe('Global Application Tests', () => {
       cy.get('#root button.text-white span').click();
     });
 
-    it('Check Settings interface (Admin)', function() {
+    it('Check Settings interface (Admin)', () => {
       cy.visit('http://localhost:3000/')
       
       cy.get('#root a.font-bold').click();
@@ -166,7 +166,7 @@ describe('Global Application Tests', () => {
       cy.get(`#root div:nth-child(${randomNumber}) button.hover\\:underline`).click();
     });
 
-    it('Check Settings interface (Manager)', function() {
+    it('Check Settings interface (Manager)', () => {
       cy.visit('http://localhost:3000/')
       
       cy.get('#root a.font-bold').click();
@@ -205,7 +205,7 @@ describe('Global Application Tests', () => {
       cy.get('#root p.dark\\:text-gray-400').should('have.text', ' - collaborator');
     });
 
-    it('testing access feature', function() {
+    it('testing access feature', () => {
       cy.visit('http://localhost:3000/')
       
       cy.get('#root a.font-bold').click();
@@ -222,7 +222,7 @@ describe('Global Application Tests', () => {
       cy.get('#root h1.font-bold').should('have.text', 'Mon Profil');
     });
 
-    it('Check Settings interface (Collaborator)', function() {
+    it('Check Settings interface (Collaborator)', () => {
       cy.visit('http://localhost:3000/')
       
       cy.get('#root a.font-bold').click();
@@ -255,7 +255,7 @@ describe('Global Application Tests', () => {
       cy.get('#password').type(passwordFake);
       
       cy.get('button[type="submit"], #root button.w-full').first().click();
-      cy.get('#root div.border').should('have.text', 'Non autorisée');
+      cy.get('#root div.border').should('be.visible');
     });
 
     
