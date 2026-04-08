@@ -242,4 +242,24 @@ describe('Global Application Tests', () => {
     });
   });
 
+  describe('Orther testing', () => {
+    const emailFake = "fakeemail@exemple.com";
+    const passwordFake = 'FakePass2026!';
+
+    it('Check error is login no allows', () => {
+      cy.visit('http://localhost:3000/')
+      
+      cy.get('#root a.font-bold').click();
+      
+      cy.get('#email').type(emailFake);
+      cy.get('#password').type(passwordFake);
+      
+      cy.get('button[type="submit"], #root button.w-full').first().click();
+      cy.get('#root div.border').should('have.text', 'Non autorisée');
+    });
+
+    
+  });
+
+
 });
