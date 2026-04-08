@@ -17,8 +17,10 @@ export const api = {
     if (res.status === 204) return null;
     
     const data = await res.json();
+    const paths = window.location.pathname; 
     
-    if (res.status === 401) {
+    if (res.status === 401 && (paths !== "/login" && paths !== "/")) {
+      window.location.href = "/login";
       throw new Error("Non autorisée")
     }
     if (!res.ok) {
