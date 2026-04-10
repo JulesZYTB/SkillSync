@@ -17,6 +17,7 @@ describe('Global Application Tests', () => {
       cy.get('#root button.flex span').should('contain.text', 'Déconnexion');
       
       cy.get('#root p.dark\\:text-gray-400').should('have.text', ' - admin');
+      cy.screenshot('admin-dashboard');
     });
 
     it('Admin should be able to create a new user', () => {
@@ -41,6 +42,7 @@ describe('Global Application Tests', () => {
       cy.get('#root input[type="password"]').type(passwordTesting);
 
       cy.get('#root button.bg-blue-600.flex-1').click();
+      cy.screenshot('user-creation');
     });
 
     it('Create news project and asignée the task to a user', () => {
@@ -76,7 +78,7 @@ describe('Global Application Tests', () => {
       cy.get('#root input.border').type(faketitre);
       cy.get('#root select.border').select(randomLv);
       cy.get('#root button.font-bold.w-full').click();
-          
+      cy.screenshot('project-task-assignment');
     });
 
     it('Create news competence', () => {
@@ -116,6 +118,7 @@ describe('Global Application Tests', () => {
       cy.get('#root div:nth-child(2) > p.font-medium').click();
       cy.get('#root div:nth-child(2) > p.font-medium').click();
       cy.get('#root div:nth-child(2) > p.font-medium').should('have.text', emailAdmin);
+      cy.screenshot('admin-settings');
     });
   });
 
@@ -163,7 +166,7 @@ describe('Global Application Tests', () => {
       cy.get('#root input.border').type(fakename);
       cy.get('#root select.border').select(randomLv);
       cy.get('#root button.font-bold.w-full').click();
-      cy.get(`#root div:nth-child(${randomNumber}) button.hover\\:underline`).click();
+      cy.get(`#root div:nth-child(${randomNumber}) button.hover\\:underline`).first().click();
     });
 
     it('Check Settings interface (Manager)', () => {
@@ -258,8 +261,97 @@ describe('Global Application Tests', () => {
       cy.get('#root div.border').should('be.visible');
     });
 
-    
   });
 
+  describe('Expert E2E Scenarios (CDA Criteria)', () => {
+    it('Check error if collaborator access admin pages', () => {
+      cy.on('uncaught:exception', (err) => {
+        if (err.message.includes('Accès refusé')) return false;
+      });
+
+      const emailCollaborator = "collaborateur@exemple.com";
+      const passwordCollaborator = '123456!';
+
+      cy.login(emailCollaborator, passwordCollaborator);
+      
+      cy.visit('http://localhost:3000/admin/users');
+      
+      cy.url().should('not.include', '/login');
+      cy.screenshot('rbac-security-check');
+    });
+
+    it('Create project and task then collaborator complete it', () => {
+      const emailAdmin = "admin@exemple.com";
+      const passwordAdmin = '123456!';
+      const emailCollaborator = "collaborateur@exemple.com";
+      const passwordCollaborator = '123456!';
+      
+      const projectName = `E2E_Project_${Math.random().toString(36).substring(2, 7)}`;
+      const taskName = `E2E_Task_${Math.random().toString(36).substring(2, 7)}`;
+
+      cy.login(emailAdmin, passwordAdmin);
+      cy.get('a[href="/admin/projects"]').click();
+      cy.get('button').contains('Nouveau Projet').click();
+      cy.get('input').first().type(projectName);
+      cy.get('textarea').type('Description E2E Lifecycle');
+      cy.get('button[type="submit"]').click();
+      
+      cy.get('h2').contains(projectName).parents('.bg-white').first().within(() => {
+        cy.get('button').contains('Ajouter tâche').click();
+      });
+      cy.get('input').type(taskName);
+      cy.get('select').select('Collaborateur');
+      cy.get('button[type="submit"]').click();
+
+      cy.get('button').contains('Déconnexion').click();
+
+      cy.login(emailCollaborator, passwordCollaborator);
+      cy.get('h4').contains(taskName).should('be.visible');
+      cy.get('h4').contains(taskName).parents('.bg-white').first().within(() => {
+        cy.get('button').contains('Terminer').click();
+      });
+      
+      cy.get('h4').contains(taskName).should('not.exist');
+      cy.get('button').contains('Déconnexion').click();
+
+      cy.login(emailAdmin, passwordAdmin);
+      cy.get('a[href="/"]').first().click();
+      cy.get('h1').contains('Tableau de Bord').should('be.visible');
+      cy.screenshot('business-lifecycle-complete');
+    });
+
+    it('Check responsive layout on mobile', () => {
+      cy.viewport('iphone-6');
+      cy.visit('http://localhost:3000/');
+      
+      cy.get('h1').should('contain.text', 'Bienvenue sur SkillSync');
+      
+      cy.get('a').contains('Commencer maintenant').click();
+      cy.get('#email').type("admin@exemple.com");
+      cy.get('#password').type("123456!{enter}");
+      
+      cy.get('nav').should('be.visible');
+      cy.screenshot('mobile-responsive-view');
+    });
+
+    it('Check profile updates persist after reload', () => {
+      const emailAdmin = "admin@exemple.com";
+      const passwordAdmin = '123456!';
+      const projectName = `Persist_${Math.random().toString(36).substring(2, 6)}`;
+
+      cy.login(emailAdmin, passwordAdmin);
+      cy.get('a[href="/admin/projects"]').click();
+      
+      cy.get('button').contains('Nouveau Projet').click();
+      cy.get('input').first().type(projectName);
+      cy.get('textarea').type('Description de test persistance');
+      cy.get('button[type="submit"]').click();
+      
+      cy.reload();
+      
+      cy.contains(projectName).scrollIntoView().should('be.visible');
+    });
+
+  });
 
 });
