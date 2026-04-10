@@ -174,9 +174,19 @@ export default function CollaboratorDashboard() {
                     </span>
                     <h4 className="font-bold text-xs truncate">{task.title}</h4>
                   </div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <AlertCircle size={10} className="text-gray-400" />
-                    <span className="text-[10px] text-gray-500 capitalize">{task.status.replace('_', ' ')}</span>
+                  <div className="flex items-center justify-between mt-1">
+                    <div className="flex items-center gap-2">
+                       <AlertCircle size={10} className="text-gray-400" />
+                       <span className="text-[10px] text-gray-500 capitalize">{task.status.replace('_', ' ')}</span>
+                    </div>
+                    
+                    <button 
+                      type="button"
+                      onClick={() => api.tasks.updateStatus(task.id, 'done').then(() => window.location.reload())}
+                      className="text-[9px] px-2 py-0.5 bg-green-100 text-green-700 hover:bg-green-200 rounded font-bold transition-colors"
+                    >
+                      Terminer
+                    </button>
                   </div>
                 </div>
               ))
