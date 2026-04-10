@@ -43,15 +43,41 @@ Le collaborateur utilise l'application pour voir son travail.
 
 ---
 
+## 🎯 4. Scénarios Experts (Critères CDA)
+Ces scénarios démontrent la robustesse technique et métier de l'application.
+
+### 🛡️ Sécurité & RBAC (Role Based Access Control)
+*   **Objectif** : Vérifier que les rôles sont strictement respectés.
+*   **Parcours** : Un collaborateur tente d'accéder manuellement à `/admin/users`.
+*   **Attente** : Le système doit le rediriger immédiatement vers la page de login (ou erreur 403).
+
+### 🔄 Cycle de Vie Métier E2E
+*   **Objectif** : Vérifier la chaîne de valeur complète.
+*   **Parcours** : 
+    1.  **Admin** crée un projet et une tâche assignée.
+    2.  **Collaborateur** se connecte et marque la tâche comme "Done" via le nouveau bouton de complétion.
+    3.  **Admin** vérifie sur son dashboard que les statistiques de progression ont bien été mises à jour.
+
+### 📱 Responsive Design (Mobile First)
+*   **Objectif** : Vérifier l'ergonomie sur smartphone.
+*   **Parcours** : Navigation en vue `iphone-6`.
+*   **Attente** : Vérifier que l'interface reste lisible et que le Header s'adapte correctement.
+
+### 💾 Persistance des données
+*   **Objectif** : Vérifier que les modifications survivent au rafraîchissement.
+*   **Parcours** : Modification du profil -> Page Reload -> Vérification des données.
+
+---
+
 ## 💡 Lexique pour Débutants
 *   **`cy.visit`** : "Ouvre le navigateur à cette adresse".
-*   **`cy.get`** : "Cherche cet élément sur la page" (comme un bouton ou un champ de texte).
-*   **`type`** : "Écris ce texte dans le champ".
-*   **`click`** : "Appuie sur le bouton".
+*   **`cy.login` (Custom)** : "Utilise notre commande maison pour se connecter rapidement".
+*   **`cy.viewport`** : "Change la taille de l'écran" (pour tester mobile vs desktop).
+*   **`cy.reload`** : "Rafraîchis la page".
 *   **`should('contain', ...)`** : "Vérifie que le texte affiché est le bon". C'est l'étape où on confirme que le test a réussi.
 
 ---
 
 > [!TIP]
 > **Pourquoi ces tests sont utiles ?**
-> Ils évitent de retester manuellement chaque bouton à chaque fois qu'on modifie le code. Si une modification casse la connexion, Cypress nous préviendra immédiatement !
+> Ils évitent de retester manuellement chaque bouton à chaque fois qu'on modifie le code. Si une modification casse la connexion ou la sécurité, Cypress nous préviendra immédiatement !
