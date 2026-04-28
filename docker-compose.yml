@@ -1,4 +1,6 @@
 # Launch : docker-compose up --build
+# Quand on a fait l'upload de build, on doit juste migrer la base de donnee pour la mise a jour: docker-compose exec server npm run db:migrate
+
 # Stop : docker-compose down
 services:
   db:
@@ -14,6 +16,8 @@ services:
     ports:
       - "3310:3310"
     environment:
+      APP_SECRET: secretkeygenerated123456!#@
+      CLIENT_URL: http://localhost:3000
       APP_PORT: 3310
       DB_HOST: db
       DB_PORT: 3306
@@ -28,6 +32,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      VITE_API_URL: http://server:3310
+      VITE_API_URL: http://localhost:3310/api
     depends_on:
       - server
