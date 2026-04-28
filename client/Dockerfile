@@ -1,6 +1,6 @@
 # Build : docker build -t client .
 # Run : docker run -p 3000:3000 client
-FROM node:20-alpine
+FROM node:25-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
