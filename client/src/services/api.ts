@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3310/api";
 
 // API Utilisable pour tout les requets api pour evité les repetion de code
 
