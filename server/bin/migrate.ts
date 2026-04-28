@@ -43,6 +43,10 @@ const migrate = async () => {
     database.end();
 
     console.info(`${DB_NAME} updated from '${path.normalize(schema)}' 🆙`);
+    console.info("Example user Manager: manager@exemple.com, password: 123456!");
+    console.info("Example user Collaborator: collaborator@exemple.com, password: 123456!");
+    console.info("Example user Admin: admin@exemple.com, password: 123456!");
+    console.info("You can restart the application with: docker-compose exec server npm run start 🐳");
   } catch (err) {
     const { message, stack } = err as Error;
     console.error("Error updating the database:", message, stack);
